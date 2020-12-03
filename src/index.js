@@ -2,19 +2,16 @@
  * @Author: DaZheng
  * @Date: 2020-12-03 20:10:00
  * @LastEditors: g05047
- * @LastEditTime: 2020-12-03 20:12:17
+ * @LastEditTime: 2020-12-03 21:35:53
  * @Description: file content
  */
-import React from 'react';
+// import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import Main from './Pages/Main'
 // import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-  // <React.StrictMode>
-    <App />
-  // </React.StrictMode>
-  ,
+  <Main />,
   document.getElementById('root')
 );
 
