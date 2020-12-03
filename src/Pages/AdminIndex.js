@@ -2,19 +2,24 @@
  * @Author: DaZheng
  * @Date: 2020-12-03 22:34:39
  * @LastEditors: g05047
- * @LastEditTime: 2020-12-03 22:50:47
+ * @LastEditTime: 2020-12-03 23:23:22
  * @Description: file content
  */
- import React, {useState} from 'react'
- import { Layout, Menu, Breadcrumb } from 'antd';
- import '../static/css/AdminIndex.css'
- import {
-   DesktopOutlined,
-   PieChartOutlined,
-   FileOutlined,
-   TeamOutlined,
-   UserOutlined,
- } from '@ant-design/icons';
+import React, {useState} from 'react'
+import { Layout, Menu, Breadcrumb } from 'antd';
+
+import { Route } from 'react-router-dom'
+import AddArticle from './AddArticle'
+
+import '../static/css/AdminIndex.css'
+import {
+  DesktopOutlined,
+  PieChartOutlined,
+  FileOutlined,
+  TeamOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
+
  
  const { Header, Content, Footer, Sider } = Layout;
  const { SubMenu } = Menu;
@@ -47,14 +52,15 @@ function AdminIndex () {
         </Menu>
       </Sider>
       <Layout className="site-layout">
-        <Header className="site-layout-background" style={{ padding: 0 }} />
         <Content style={{ margin: '0 16px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
             <Breadcrumb.Item>后台管理系统</Breadcrumb.Item>
             <Breadcrumb.Item>工作台</Breadcrumb.Item>
           </Breadcrumb>
           <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-            郑俊钦的博客管理系统
+            <div>
+              <Route path="/index/" exact component={AddArticle} />
+            </div>
           </div>
         </Content>
         <Footer style={{ textAlign: 'center' }}>zhengjunqin.top ©2020 Created by Ant UED</Footer>
