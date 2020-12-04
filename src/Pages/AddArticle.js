@@ -2,17 +2,20 @@
  * @Author: DaZheng
  * @Date: 2020-12-03 22:57:43
  * @LastEditors: g05047
- * @LastEditTime: 2020-12-04 10:13:46
+ * @LastEditTime: 2020-12-04 18:48:45
  * @Description: file content
  */
-import React, { useState } from 'react'
+import React, { useState, useEffect, useReducer } from 'react'
 import marked from 'marked'
 import '../static/css/AddArticle.css'
 import { Row, Col, Input, Select, Button, DatePicker } from 'antd'
+import axios from 'axios'
+
+import servicePath from '../config/apiUrl'
 const { Option } = Select
 const { TextArea } = Input
 
-function AddArticle () {
+function AddArticle (props) {
 
   // eslint-disable-next-line
   const [articleId,setArticleId] = useState(0)  // 文章的ID，如果是0说明是新增加，如果不是0，说明是修改
@@ -30,8 +33,11 @@ function AddArticle () {
   // eslint-disable-next-line
   const [typeInfo ,setTypeInfo] = useState([]) // 文章类别信息
   // eslint-disable-next-line
-  const [selectedType,setSelectType] = useState(1) //选择的文章类别
+  const [selectedType,setSelectType] = useState('请选择类型') //选择的文章类别
 
+  useEffect( () => {
+    getTypeInfo()
+  }, [])
 
   marked.setOptions({
     renderer: new marked.Renderer(),
@@ -56,6 +62,23 @@ function AddArticle () {
     setIntroducehtml(html)
   }
 
+  const getTypeInfo = () => {
+    axios({
+      method: 'get',
+      url: servicePath.getTypeInfo,
+      withCredentials: true
+    }).then(
+      res => {
+        if (res.data.data == '没有登录') {
+          localStorage.removeItem('openId')
+          props.history.push('/')
+        } else {
+          setTypeInfo(res.data.data)
+        }
+      }
+    ) 
+  }
+
   return (
     <div>
       <Row gutter={5}>
@@ -69,8 +92,12 @@ function AddArticle () {
             </Col>
             <Col span={4}>
               &nbsp;
-              <Select defaultValue="1" size="large">
-                <Option value="1">总结记录</Option>
+              <Select defaultValue={selectedType} size="large">
+                {
+                  typeInfo.map((item, index) => {
+                    return (<Option key={index} value={item.id}>{item.typeName}</Option>)
+                  })
+                }
               </Select>
             </Col>
           </Row>
