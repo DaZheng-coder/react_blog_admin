@@ -2,7 +2,7 @@
  * @Author: DaZheng
  * @Date: 2020-12-03 22:34:39
  * @LastEditors: g05047
- * @LastEditTime: 2020-12-03 23:23:22
+ * @LastEditTime: 2020-12-04 15:39:53
  * @Description: file content
  */
 import React, {useState} from 'react'
@@ -16,13 +16,14 @@ import {
   DesktopOutlined,
   PieChartOutlined,
   FileOutlined,
+  // eslint-disable-next-line
   TeamOutlined,
   UserOutlined,
 } from '@ant-design/icons';
 
- 
- const { Header, Content, Footer, Sider } = Layout;
- const { SubMenu } = Menu;
+// eslint-disable-next-line
+const { Header, Content, Footer, Sider } = Layout;
+const { SubMenu } = Menu;
  
 function AdminIndex () {
   const [collapsed, setCollapsed] = useState(false)
