@@ -2,7 +2,7 @@
  * @Author: DaZheng
  * @Date: 2020-12-03 22:57:43
  * @LastEditors: g05047
- * @LastEditTime: 2020-12-04 22:40:46
+ * @LastEditTime: 2020-12-05 22:48:32
  * @Description: file content
  */
 import React, { useState, useEffect, useReducer } from 'react'
@@ -37,6 +37,11 @@ function AddArticle (props) {
 
   useEffect( () => {
     getTypeInfo()
+    let tmpId = props.match.params.id
+    if (tmpId) {
+      setArticleId(tmpId)
+      getArticleById(tmpId)
+    }
   }, [])
 
   marked.setOptions({
@@ -80,7 +85,8 @@ function AddArticle (props) {
   }
 
   const selectTypeHandler = (value) => {
-    setSelectType(value)
+    console.log('选择的值---->', value)
+    setSelectType(parseInt(value) + 1 + '')
   }
 
   const saveArticle = () => {
@@ -147,6 +153,26 @@ function AddArticle (props) {
     }
   }
 
+  const getArticleById = (id) => {
+    axios(servicePath.getArticleById + id, {
+      withCredentials: true
+    }).then(
+      res => {
+        let articleInfo = res.data.data[0]
+        console.log('获取的文章数据---->', articleInfo)
+        setArticleTitle(articleInfo.title)
+        setArticleContent(articleInfo.article_content)
+        let html = marked(articleInfo.article_content)
+        setMarkdownContent(html)
+        setIntroducemd(articleInfo.introduce)
+        let tmpInt = marked(articleInfo.introduce)
+        setIntroducehtml(tmpInt)
+        setShowDate(articleInfo.addTime)
+        setSelectType(articleInfo.typeId)
+      }
+    )
+  }
+
   return (
     <div>
       <Row gutter={5}>
@@ -178,6 +204,7 @@ function AddArticle (props) {
                 className="markdown-content"
                 rows={35}
                 placeholder="文章内容"
+                value={articleContent}
                 onChange={changeContent}
                 onPressEnter={changeContent}
               />
@@ -212,7 +239,7 @@ function AddArticle (props) {
             </Col>
             <Col span={12}>
               <div className="date-select">
-                <DatePicker 
+                <DatePicker
                   onChange={(date, dateString) => setShowDate(dateString)}
                   placeholder="发布日期"
                   size="large"

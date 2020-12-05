@@ -2,7 +2,7 @@
  * @Author: DaZheng
  * @Date: 2020-12-04 22:42:58
  * @LastEditors: g05047
- * @LastEditTime: 2020-12-05 12:03:26
+ * @LastEditTime: 2020-12-05 20:25:25
  * @Description: file content
  */
 import React, { useState, useEffect } from 'react'
@@ -48,6 +48,11 @@ function ArticleList (props) {
     })
   }
 
+  // 修改文章的跳转方法
+  const updateArticle = (id) => {
+    props.history.push('/index/add/' + id)
+  }
+
   return (
     <div>
       <List 
@@ -89,7 +94,7 @@ function ArticleList (props) {
                   {item.view_count}
                 </Col>
                 <Col span={4}>
-                  <Button type="primary">修改</Button>&nbsp;
+                  <Button type="primary" onClick={() => {updateArticle(item.id)}}>修改</Button>&nbsp;
                   <Button onClick={() => {delArticle(item.id)}}>删除</Button>
                 </Col>
               </Row>

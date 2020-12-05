@@ -2,7 +2,7 @@
  * @Author: DaZheng
  * @Date: 2020-12-03 22:34:39
  * @LastEditors: g05047
- * @LastEditTime: 2020-12-05 09:38:27
+ * @LastEditTime: 2020-12-05 20:25:59
  * @Description: file content
  */
 import React, {useState} from 'react'
@@ -76,6 +76,7 @@ function AdminIndex (props) {
             <div>
               <Route path="/index/" exact component={AddArticle} />
               <Route path="/index/add/" exact component={AddArticle} />
+              <Route path="/index/add/:id" exact component={AddArticle} />
               <Route path="/index/list/" exact component={ArticleList} />
             </div>
           </div>
