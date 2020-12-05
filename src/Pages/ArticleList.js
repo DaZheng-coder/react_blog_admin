@@ -2,7 +2,7 @@
  * @Author: DaZheng
  * @Date: 2020-12-04 22:42:58
  * @LastEditors: g05047
- * @LastEditTime: 2020-12-05 10:28:38
+ * @LastEditTime: 2020-12-05 12:03:26
  * @Description: file content
  */
 import React, { useState, useEffect } from 'react'
@@ -28,6 +28,24 @@ function ArticleList (props) {
         setList(res.data.list)
       }
     )
+  }
+
+  const delArticle = (id) =>{
+    confirm({
+      title: '确定要删除这篇博客文章吗？',
+      content: '点击OK文章将永远被删除，无法恢复',
+      onOk () {
+        axios(servicePath.delArticle + id, { withCredentials: true }).then(
+          res => {
+            message.success('文章删除成功')
+            getList()
+          }
+        )
+      },
+      onCancel () {
+        message.success('文章没有任何变化')
+      }
+    })
   }
 
   return (
@@ -71,8 +89,8 @@ function ArticleList (props) {
                   {item.view_count}
                 </Col>
                 <Col span={4}>
-                  <Button type="primary">修改</Button>
-                  <Button>删除</Button>
+                  <Button type="primary">修改</Button>&nbsp;
+                  <Button onClick={() => {delArticle(item.id)}}>删除</Button>
                 </Col>
               </Row>
             </List.Item>
